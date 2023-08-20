@@ -1,11 +1,14 @@
 import React from "react";
+import NavScrollExample from "../Navigation/NavBar";
+import SlideShow from "../Components/SlideShow";
 
-const Dashboard = () => {
+function Dashboard() {
 	return (
-		<div>
-			<h1>Home</h1>
-		</div>
+		<React.Fragment>
+			<NavScrollExample />
+			<SlideShow />
+		</React.Fragment>
 	);
-};
+}
 
 export default Dashboard;

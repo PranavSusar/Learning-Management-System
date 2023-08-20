@@ -3,7 +3,6 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 
 function NavScrollExample() {
 	return (
@@ -17,21 +16,9 @@ function NavScrollExample() {
 						style={{ maxHeight: "100px" }}
 						navbarScroll
 					>
-						<Nav.Link href="/dash">Home</Nav.Link>
-						<Nav.Link href="/about">About</Nav.Link>
-						<NavDropdown title="Link" id="navbarScrollingDropdown">
-							<NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-							<NavDropdown.Item href="#action4">
-								Another action
-							</NavDropdown.Item>
-							<NavDropdown.Divider />
-							<NavDropdown.Item href="#action5">
-								Something else here
-							</NavDropdown.Item>
-						</NavDropdown>
-						<Nav.Link href="#" disabled>
-							Link
-						</Nav.Link>
+						<Nav.Link href="/dashboard">Home</Nav.Link>
+						<Nav.Link href="/Register">Register</Nav.Link>
+						<Nav.Link href="/Login">Login</Nav.Link>
 					</Nav>
 					<Form className="d-flex">
 						<Form.Control
