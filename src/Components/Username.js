@@ -3,18 +3,16 @@ import { Link } from "react-router-dom";
 import avatar from "../Assets/profile.jpeg";
 import { Toaster } from "react-hot-toast";
 import { useFormik } from "formik";
-import { usernameValidate } from "../Helper/Validate";
-
+import { usernameValidate, passwordValidate } from "../Helper/Validate";
 
 import styles from "../Styles/Login.module.css";
 
-const Login = () => {
+const Username = () => {
 	const formik = useFormik({
 		initialValues: {
 			username: "",
-			password: "",
 		},
-        validate: usernameValidate,
+		validate: usernameValidate,
 		validateOnBlur: false,
 		validateOnChange: false,
 		onSubmit: async (values) => {
@@ -24,19 +22,18 @@ const Login = () => {
 
 	return (
 		<div className="container mx-auto">
-
-            <Toaster position="top-center" reverseOrder={false}></Toaster>
+			<Toaster position="top-center" reverseOrder={false}></Toaster>
 			<div className="flex justify-center items-center h-screen">
 				<div className={styles.glass}>
 					<div className="title flex flex-col items-center">
 						<h4 className="text-5xl font-bold">Hello Again!</h4>
-						<span className="py-3 text-xl w-2/3 text-center text-gray-500">
+						<span className="py-4 text-xl w-2/3 text-center text-gray-500">
 							Explore More by connectiong with us.
 						</span>
 					</div>
 
-					<form className="py-1" onSubmit={formik.handleSubmit}>
-						<div className="profile flex justify-center py-1">
+					<form className="py-3" onSubmit={formik.handleSubmit}>
+						<div className="profile flex justify-center py-4">
 							<img src={avatar} className={styles.profile_img} alt="avatar" />
 						</div>
 
@@ -47,18 +44,14 @@ const Login = () => {
 								type="text"
 								placeholder="Username"
 							/>
-							<input
-								{...formik.getFieldProps("password")}
-								className={styles.textbox}
-								type="password"
-								placeholder="Password"
-							/>
-							<button className={styles.btn} type="submit">
-								Let's go!
-							</button>
+							{/* <Link to="/password"> */}
+								<button className={styles.btn} type="submit">
+									Let's go!
+								</button>
+							{/* </Link> */}
 						</div>
 
-						<div className="py-4 text-center">
+						<div className="py-4 text-center flex flex-col">
 							<span className="text-gray-500">
 								New Student?{" "}
 								<Link className="text-red-500" to="/register">
@@ -73,4 +66,4 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default Username;

@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
 /* import all components */
-import Login from "./Components/Login";
+import Username from "./Components/Username";
 import Dashboard from "./Pages/Dashboard";
 import Password from "./Components/Password";
 import Register from "./Components/Register";
@@ -21,7 +21,7 @@ function App() {
 				<Route path="/" />
 				<Route path="/dashboard" element={<Dashboard />} />
 				<Route path="/register" element={<Register />} />
-				<Route path="/login" element={<Login />} />
+				<Route path="/username" element={<Username />} />
 				<Route path="/profile" element={<Profile />} />
 				<Route path="/recovery" element={<Recovery />} />
 				<Route path="/password" element={<Password />} />
