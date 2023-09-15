@@ -26,8 +26,15 @@ const login = async (req, res) => {
     const isPasswordCorrect = await user.comparePassword(password)
     
     const token = user.createJWT()
-    
-    res.status(StatusCodes.OK).json({user: user.name})
+
+    res.cookie("access_token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+    }).status(StatusCodes.OK).json({user: user.name})
+}
+
+const logout = async (req,res) =>{
+    res.clearCookie("access_token").status(StatusCodes.OK).json({success: true, msg: "Successfully logged out"})
 }
 
 const forgotPassword = async(req,res,next) => {
@@ -91,4 +98,5 @@ module.exports = {
     login,
     forgotPassword,
     resetPassword,
+    logout,
 }
