@@ -1,13 +1,13 @@
 const { BadRequestError, UnauthenticatedError } = require('../errors')
-const Student = require('../models/Student')
+const User = require('../models/User')
 const {StatusCodes} = require('http-status-codes')
 const sendEmail = require('../utils/sendEmail')
 
 
 const register = async (req, res) => {
-    const student = await Student.create({...req.body})
-    const token = await student.createJWT()
-    res.status(StatusCodes.CREATED).json({student:student.name, token})
+    const user = await User.create({...req.body})
+    const token = await user.createJWT()
+    res.status(StatusCodes.CREATED).json({user:user.name, token})
 }
 
 const login = async (req, res) => {
@@ -17,17 +17,17 @@ const login = async (req, res) => {
         throw new BadRequestError('Please provide roll number and password')
     }
     
-    const student = await Student.findOne({roll_number})
+    const user = await User.findOne({roll_number})
     
-    if(!student){
+    if(!user){
         throw new UnauthenticatedError('Invalid Credentials')
     }
     
-    const isPasswordCorrect = await student.comparePassword(password)
+    const isPasswordCorrect = await user.comparePassword(password)
     
-    const token = student.createJWT()
+    const token = user.createJWT()
     
-    res.status(StatusCodes.OK).json({student: student.name})
+    res.status(StatusCodes.OK).json({user: user.name})
 }
 
 const forgotPassword = async(req,res,next) => {
@@ -37,30 +37,30 @@ const forgotPassword = async(req,res,next) => {
         throw new BadRequestError('Please provide email Id')
     }
     
-    const student = await Student.findOne({email})
+    const user = await User.findOne({email})
     
-    if(!student){
+    if(!user){
         throw new UnauthenticatedError('Invalid email Id')
     }
                     
-    const resetToken = student.createResetPasswordToken()
+    const resetToken = user.createResetPasswordToken()
     
-    await student.save({validateBeforeSave: false})
+    await user.save({validateBeforeSave: false})
     
     const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/auth/resetPassword/${resetToken}`
     const message = `Click on the link below to reset password.\n\n${resetUrl}\n\nLink will be active for 10 minutes. `
     
     try {
         await sendEmail({
-            email: student.email,
+            email: user.email,
             subject: 'Reset Password',
             message: message
         })
         res.status(StatusCodes.OK).json({msg:"Password reset link sent"})
     } catch (err) {
-        student.passwordResetToken = undefined
-        student.passwordResetTokenExpires = undefined
-        await student.save({validateBeforeSave: false})
+        user.passwordResetToken = undefined
+        user.passwordResetTokenExpires = undefined
+        await user.save({validateBeforeSave: false})
         console.log(err)
         return next(err)
     }
@@ -70,17 +70,17 @@ const forgotPassword = async(req,res,next) => {
 
 const resetPassword = async (req,res) => {
     const token = crypto.createHash('sha256').update(req.params.token).digest(hex)
-    const student = Student.findOne({passwordResetToken: token, passwordResetTokenExpires: {$gt: Date.now()}})
+    const user = User.findOne({passwordResetToken: token, passwordResetTokenExpires: {$gt: Date.now()}})
     
-    if(!student)
+    if(!user)
     throw new BadRequestError('Token is invalid or has expired')
 
-    student.password = req.body.password
-    student.passwordResetToken = undefined
-    student.passwordResetTokenExpires = undefined
-    student.passwordChangedAt = Date.now()
+    user.password = req.body.password
+    user.passwordResetToken = undefined
+    user.passwordResetTokenExpires = undefined
+    user.passwordChangedAt = Date.now()
 
-    await student.save()
+    await user.save()
 
     res.status(StatusCodes.OK).json({msg:"password reset successfully"})
 
