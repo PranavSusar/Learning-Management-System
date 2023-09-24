@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
 
 
-const StudentSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     name:{
         type: String,
         required:[true, 'Please provide name'],
@@ -25,6 +25,10 @@ const StudentSchema = new mongoose.Schema({
         type:String,
         required:[true, 'Please provide roll number'],
     },
+    role:{
+        type:String,
+        enum:["student", "faculty"],
+    },
     password: {
         type: String,
         required: [true, 'Please provide a password'],
@@ -37,21 +41,21 @@ const StudentSchema = new mongoose.Schema({
     passwordResetTokenExpires: Date,
 })
 
-StudentSchema.pre('save', async function(){
+UserSchema.pre('save', async function(){
     const salt = await bcrypt.genSalt(10)
     this.password =  bcrypt.hash(this.password, salt)
 })
 
-StudentSchema.methods.createJWT = function(){
-    return jwt.sign({userId:this._id, name:this.name}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_LIFETIME})
+UserSchema.methods.createJWT = function(){
+    return jwt.sign({userId:this._id, name:this.name, role:this.role}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_LIFETIME})
 }
 
-StudentSchema.methods.comparePassword = async function(candidatePassword){
+UserSchema.methods.comparePassword = async function(candidatePassword){
     const isMatch = bcrypt.compare(candidatePassword, this.password)
     return isMatch
 }
 
-StudentSchema.methods.createResetPasswordToken = function(){
+UserSchema.methods.createResetPasswordToken = function(){
     const resetToken = crypto.randomBytes(32).toString('hex')
 
     this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex')
@@ -60,4 +64,4 @@ StudentSchema.methods.createResetPasswordToken = function(){
     return resetToken
 }
 
-module.exports = mongoose.model('Student', StudentSchema)
+module.exports = mongoose.model('User', UserSchema)

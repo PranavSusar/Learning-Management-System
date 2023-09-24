@@ -5,6 +5,7 @@ require('express-async-errors')
 const mongoose = require('mongoose')
 
 const express = require('express')
+const cookieParser = require('cookie-parser')
 const app = express()
 
 //Routers
@@ -16,9 +17,15 @@ const notFound = require('./middleware/not-found')
 const errorHandler = require('./middleware/error-handler')
 
 app.use(express.json())
+app.use(cookieParser())
+
+//middlewares
+const authenticateUser = require('./middleware/authentication')
+
 
 //routes
 app.use('/api/v1/auth', authRouter)
+// app.get('/api/v1/protected', authenticateUser, (req,res) => res.send("protected"))
 
 
 
