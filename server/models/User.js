@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
     },
     gender:{
         type: String,
-        required: [true, 'Please provide gender'],
+        // required: [true, 'Please provide gender'],
         enum: ['male', 'female', 'others']
     },
     email:{
@@ -23,7 +23,7 @@ const UserSchema = new mongoose.Schema({
     },    
     roll_number:{
         type:String,
-        required:[true, 'Please provide roll number'],
+        // required:[true, 'Please provide roll number'],
     },
     role:{
         type:String,

@@ -18,4 +18,14 @@ const auth = (req,res,next) => {
     }
 }
 
-module.exports = auth
+const checkRole = (roles) => async (req, res, next) =>{
+    if(!roles.includes(req.user.role)){
+        throw new UnauthenticatedError('You do not have access to this route')
+    }
+
+}
+
+module.exports = {
+    auth,
+    checkRole
+}
