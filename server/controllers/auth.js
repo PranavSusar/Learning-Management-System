@@ -10,17 +10,21 @@ const register = async (req, res) => {
     res.status(StatusCodes.CREATED).json({user:user.name, token})
 }
 
-const login = async (req, res) => {
-    const {roll_number, password} = req.body
+const login = async (req, role, res) => {
+    const {email, password} = req.body
 
-    if(!roll_number || !password){
+    if(!email || !password){
         throw new BadRequestError('Please provide roll number and password')
     }
     
-    const user = await User.findOne({roll_number})
+    const user = await User.findOne({email})
     
     if(!user){
         throw new UnauthenticatedError('Invalid Credentials')
+    }
+
+    if(user.role !== role){
+        throw new UnauthenticatedError('Please make sure you are logging in from the right portal')
     }
     
     const isPasswordCorrect = await user.comparePassword(password)
