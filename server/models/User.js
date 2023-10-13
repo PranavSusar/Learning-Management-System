@@ -25,10 +25,23 @@ const UserSchema = new mongoose.Schema({
         type:String,
         // required:[true, 'Please provide roll number'],
     },
+    batch:{
+        type:String,
+    },
+    section:{
+        type:String,
+    },
     role:{
         type:String,
-        enum:["student", "faculty"],
+        enum:["student", "faculty", "admin"],
     },
+    courses: [
+        {
+          courseId: { type: mongoose.Schema.Types.ObjectId, ref: 'Course' },
+          courseName: String,
+          // other course-related properties
+        }
+      ],
     password: {
         type: String,
         required: [true, 'Please provide a password'],
@@ -37,8 +50,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
-    passwordChangedAt: Date,
-    passwordResetTokenExpires: Date,
+
 })
 
 UserSchema.pre('save', async function(){
