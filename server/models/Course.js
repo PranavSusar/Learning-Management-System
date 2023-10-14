@@ -1,7 +1,4 @@
 const mongoose = require('mongoose')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const crypto = require('crypto')
 
 
 const CourseSchema = new mongoose.Schema({
@@ -22,14 +19,9 @@ const CourseSchema = new mongoose.Schema({
     users: [{ 
         type: mongoose.Schema.Types.ObjectId, ref: 'User' 
     }],
-    timestamps: {
-        createdAt: 'created_at', 
-        updatedAt: 'updated_at' 
-    },
     
-
-    
-})
+},
+{ timestamps: true })
 
 
 module.exports = mongoose.model('Course', CourseSchema)

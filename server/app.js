@@ -10,6 +10,7 @@ const app = express()
 
 //Routers
 const authRouter = require('./routes/auth')
+const coursesRouter = require('./routes/courses')
 
 
 //error handlers
@@ -25,6 +26,7 @@ const authenticateUser = require('./middleware/authentication')
 
 //routes
 app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/courses', coursesRouter)
 // app.get('/api/v1/protected', authenticateUser, (req,res) => res.send("protected"))
 
 
