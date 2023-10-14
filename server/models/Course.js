@@ -16,7 +16,10 @@ const CourseSchema = new mongoose.Schema({
     section:{
         type: String,
     },
-    users: [{ 
+    instructor:{
+        type: mongoose.Schema.Types.ObjectId, ref: 'User' 
+    },
+    students: [{ 
         type: mongoose.Schema.Types.ObjectId, ref: 'User' 
     }],
     
