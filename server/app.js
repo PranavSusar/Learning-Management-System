@@ -31,10 +31,9 @@ const {
 
 //routes
 app.use('/api/v1/auth', authRouter)
-app.use('/api/v1/courses', auth, coursesRouter)
-app.use('/api/v1/student', auth, studentRouter)
-app.use('/api/v1/faculty', auth, facultyRouter)
-// app.get('/api/v1/protected', authenticateUser, (req,res) => res.send("protected"))
+app.use('/api/v1/courses', auth, checkRole("admin"), coursesRouter)
+app.use('/api/v1/student', auth, checkRole("student"), studentRouter)
+app.use('/api/v1/faculty', auth, checkRole("faculty"), facultyRouter)
 
 
 
