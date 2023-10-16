@@ -30,10 +30,9 @@ const createCourse = async(req,res) => {
     }) 
 
     const studentIds = students.map(student => student._id)
-    const instructor = await User.find({
+    const instructor = await User.findOne({
         email:instructorMailId
     })
-
 
     const course = await Course.create({
         ... req.body,  
