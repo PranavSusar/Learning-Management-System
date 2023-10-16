@@ -29,6 +29,10 @@ const login = async (req, role, res) => {
     
     const isPasswordCorrect = await user.comparePassword(password)
     
+    if(!isPasswordCorrect){
+        throw new UnauthenticatedError('Invalid credentials')
+    }
+
     const token = user.createJWT()
 
     res.cookie("access_token", token, {

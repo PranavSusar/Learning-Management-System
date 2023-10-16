@@ -10,6 +10,9 @@ const app = express()
 
 //Routers
 const authRouter = require('./routes/auth')
+const coursesRouter = require('./routes/courses')
+const studentRouter = require('./routes/student')
+const facultyRouter = require('./routes/faculty')
 
 
 //error handlers
@@ -20,12 +23,17 @@ app.use(express.json())
 app.use(cookieParser())
 
 //middlewares
-const authenticateUser = require('./middleware/authentication')
+const {
+    auth,
+    checkRole
+} = require('./middleware/authentication')
 
 
 //routes
 app.use('/api/v1/auth', authRouter)
-// app.get('/api/v1/protected', authenticateUser, (req,res) => res.send("protected"))
+app.use('/api/v1/courses', auth, checkRole("admin"), coursesRouter)
+app.use('/api/v1/student', auth, checkRole("student"), studentRouter)
+app.use('/api/v1/faculty', auth, checkRole("faculty"), facultyRouter)
 
 
 
