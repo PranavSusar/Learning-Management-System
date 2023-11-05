@@ -1,0 +1,62 @@
+.checkIn .checkInCard{
+  border:2px solid;
+  padding: 20px 28px 13px;
+  margin: 18px 0 30px;
+  font-size: 14px;
+  width: 100%;
+  margin: 0 0 30px 0;
+  background-color: #FFF;
+  border-radius: 5px;
+}
+.checkIn.earlyCard .checkInCard{
+  border-color: #1FC125;
+}
+.checkIn.ontimeCard .checkInCard{
+  border-color: #00B2F6;
+}
+.checkIn.lateCard .checkInCard,
+.checkIn.absentCard .checkInCard{
+  border-color:#FD6161;
+}
+.checkIn h3{
+  font-size: 25px;
+  margin: 0;
+  padding: 0;
+}
+.checkIn h2{
+  font-size: 26px;
+  text-align: right;
+  font-weight: bold;
+}
+.checkIn.earlyCard h2{
+  color:#1FC125;
+}
+.checkIn.ontimeCard h2{
+  color:#00B2F6;
+}
+.checkIn.lateCard h2,
+.checkIn.absentCard h2{
+  color:#FD6161;
+}
+.checkIn .cardBody{
+  float: left;
+  width: 60%;
+}
+.checkInCard .card-text{
+  font-size:18px;
+  margin: 0;
+  padding: 0;
+}
+.card-text a{
+
+}
+.checkInCard .text-muted{
+  color:#7B8286;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+.checkIn .checkInRight{
+  float:right;
+  width:30%;
+}

@@ -2,17 +2,3 @@
   font-family: sans-serif;
   text-align: center;
 }
-
-.custom-button-group {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  right: 0;
-}
-
-.container-padding-bottom {
-  padding-bottom: 20px;
-}
